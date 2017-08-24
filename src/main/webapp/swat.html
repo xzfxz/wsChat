@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/sweetalert.css"/>
+    <script src="./js/sweetalert.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+基本信息：<button id="demo1">试一试</button>  <br />
+
+带有文字的标题：<button id="demo2">试一试</button>  <br />
+
+成功提示：<button id="demo3">试一试</button>  <br />
+
+带有“确认”按钮的功能的警告消息：<button id="demo4">试一试</button>  <br />
+
+通过传递参数，您可以执行一些其他的事情比如“取消”。：<button id="demo5">试一试</button>  <br />
+
+一个有自定义图标的消息：<button id="demo6">试一试</button>  <br />
+
+自定义HTML信息：<button id="demo7">试一试</button>  <br />
+
+自定义HTML信息：<button id="demo8">试一试</button>  <br />
+
+更换“提示”功能: <button id="demo9">试一试</button>  <br />
+
+使用加载程序（例如，用于AJAX请求）: <button id="demo10">试一试</button>  <br />
+</body>
+<script>
+
+    var hiddenProperty = 'hidden' in document ? 'hidden' :
+            'webkitHidden' in document ? 'webkitHidden' :
+                    'mozHidden' in document ? 'mozHidden' :
+                            null;
+    var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+    var onVisibilityChange = function(){
+        if (!document[hiddenProperty]) {
+            console.log('页面非激活');
+        }else{
+            console.log('页面激活')
+        }
+    };
+    document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+
+
+    document.getElementById("demo1").onclick = function() {
+        swal("这是一个信息提示框!")
+    };
+
+    document.getElementById("demo2").onclick = function() {
+        swal("这是一个信息提示框!", "很漂亮，不是吗？")
+    };
+
+    document.getElementById("demo3").onclick = function() {
+        swal("干得好", "你点击了按钮!", "success")
+    };
+
+    document.getElementById("demo4").onclick = function() {
+        swal({
+            title: "你确定？",
+            text: "您将无法恢复这个虚构的文件！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的，删除！",
+            closeOnConfirm: false
+        }, function() {
+            swal("删除!", "您的虚构文件已被删除！", "success")
+        })
+    };
+
+    document.getElementById("demo5").onclick = function() {
+        swal({
+            title: "你确定？",
+            text: "您将无法恢复这个虚构的文件！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的，删除！",
+            cancelButtonText: "不，取消",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                swal("删除!", "您的虚构文件已被删除！", "success")
+            } else{
+                swal("取消!", "您的虚构文件是安全的！", "error")
+            }
+        })
+    };
+
+    document.getElementById("demo6").onclick = function() {
+        swal({
+            title: "Sweet!",
+            text: "这里是自定义图像!",
+            imageUrl: "img/thumbs-up.jpg"
+        })
+    };
+
+    document.getElementById("demo7").onclick = function() {
+        swal({
+            title: "HTML <small>标题</small>!",
+            text: "A custom <span style='color:pink'>html<span> message.",
+            html:　true
+        })
+    };
+
+    document.getElementById("demo8").onclick = function() {
+        swal({
+            title: "自动关闭警报!",
+            text: "2秒后自动关闭",
+            timer: 2000,
+            showConfirmButton: false
+        })
+    };
+
+    document.getElementById("demo9").onclick = function() {
+        swal({
+            title: "请输入！",
+            text: "填写一些信息",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "请输入..."
+        }, function(inputValue) {
+            if (inputValue === false) {
+                return false;
+            }
+            if (inputValue === "") {
+                swal.showInputError("内容不能为空！");
+                return false;
+            }
+
+            swal("Nice!", "你输入的是：" + inputValue, "success")
+        })
+    };
+
+    document.getElementById("demo10").onclick = function() {
+        swal({
+            title: "AJAX请求实例",
+            text: "提交运行Ajax请求",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function() {
+            setTimeout(function() {
+                swal("AJAX请求完成！");
+            }, 2000)
+        })
+    };
+
+</script>
+</html>

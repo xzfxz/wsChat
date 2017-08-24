@@ -1,0 +1,12 @@
+
+.talkArea{
+    height: 300px;
+    border-bottom: 1px solid #ced1d8;
+    padding: .5rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    word-wrap:break-word;
+    -webkit-overflow-scrolling: touch;
+}
+
