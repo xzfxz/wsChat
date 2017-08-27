@@ -7,7 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
 import com.zhao.bean.Message;
-import com.zhao.bean.Message_;
+import com.zhao.bean.Message;
 import com.zhao.tool.MongoManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -27,9 +27,9 @@ public class MessageDao implements MessageDaoI {
 
     private MongoCollection<Document> coll = mongoDatabase.getCollection(Table);
 
-    public void addMessage(Message_ message_) {
+    public void addMessage(Message message) {
 
-        Document document = message_.toDocuments();
+        Document document = message.toDocuments();
         coll.insertOne(document);
 
     }
@@ -41,17 +41,17 @@ public class MessageDao implements MessageDaoI {
 
     }
 
-    public void updateMeaage(Message_ message_) {
+    public void updateMeaage(Message message) {
 
-        BasicDBObject id = new BasicDBObject("_id", new ObjectId(message_.getId()));
-        BasicDBObject object = new BasicDBObject(Message_.Meta.MsgAt, message_.getMsgAt());
-        object.put(Message_.Meta.Msg, message_.getMsg());
-        object.put(Message_.Meta.From, message_.getFrom());
-        object.put(Message_.Meta.To, message_.getTo());
-        object.put(Message_.Meta.Nickname, message_.getNickname());
-        object.put(Message_.Meta.Ua, message_.getUa());
-        object.put(Message_.Meta.Pic, message_.getPic());
-        object.put(Message_.Meta.Clientcount, message_.getClientcount());
+        BasicDBObject id = new BasicDBObject("_id", new ObjectId(message.getId()));
+        BasicDBObject object = new BasicDBObject(Message.Meta.MsgAt, message.getMsgAt());
+        object.put(Message.Meta.Msg, message.getMsg());
+        object.put(Message.Meta.From, message.getFrom());
+        object.put(Message.Meta.To, message.getTo());
+        object.put(Message.Meta.Nickname, message.getNickname());
+        object.put(Message.Meta.Ua, message.getUa());
+        object.put(Message.Meta.Pic, message.getPic());
+        object.put(Message.Meta.Clientcount, message.getClientcount());
 
         BasicDBObject append = new BasicDBObject().append("$set", object);
 
@@ -59,7 +59,7 @@ public class MessageDao implements MessageDaoI {
 
     }
 
-    public Message_ getMessage(String uid) {
+    public Message getMessage(String uid) {
 
         ObjectId objectId = new ObjectId(uid);
 
@@ -69,35 +69,35 @@ public class MessageDao implements MessageDaoI {
             if(null ==first){
                 return null;
             }
-            Message_ message_ = new Message_().toMessage(first);
-            return message_;
+            Message message = new Message().toMessage(first);
+            return message;
         }
         return null;
 
     }
 
-    public List<Message_> listMessage(long start, long end, String uname) {
+    public List<Message> listMessage(long start, long end, String uname) {
         FindIterable<Document> documents = coll.find();
         BasicDBObject bb = null;
         if(0!=start && 0!=end){
-            bb = new BasicDBObject(Message_.Meta.MsgAt, new BasicDBObject("$gt", start).append("$lte", end));
+            bb = new BasicDBObject(Message.Meta.MsgAt, new BasicDBObject("$gt", start).append("$lte", end));
         }
         if(0 !=start && 0==end){
-            bb = new BasicDBObject(Message_.Meta.MsgAt, new BasicDBObject("$gt", start).append("$lte", System.currentTimeMillis()));
+            bb = new BasicDBObject(Message.Meta.MsgAt, new BasicDBObject("$gt", start).append("$lte", System.currentTimeMillis()));
         }
 
 
         if(null!=uname && !"".equals(uname.trim())){
-            bb = new BasicDBObject().append(Message_.Meta.Nickname,uname);
+            bb = new BasicDBObject().append(Message.Meta.Nickname,uname);
         }
         if(null !=bb){
             documents = documents.filter(bb);
         }
-        ArrayList<Message_> msgs = new ArrayList<Message_>();
+        ArrayList<Message> msgs = new ArrayList<Message>();
 
         for(Document doc:documents){
-            Message_ message_ = new Message_().toMessage(doc);
-            msgs.add(message_);
+            Message message = new Message().toMessage(doc);
+            msgs.add(message);
         }
 
         return msgs;

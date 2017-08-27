@@ -12,7 +12,7 @@ public interface UserDaoI {
     void deleteUser(String uid);
     void updateUser(User user);
     User getUser(String uid);
-
+//通过lat时间查询
     List<User> list(long start,long end,String name);
 
 }

@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="ws:war exploded">
+    <output-path>$PROJECT_DIR$/target/ws</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ws" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.4.2" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.1.32" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/ws/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="ws/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -1,5 +1,5 @@
 package com.zhao.dao;
-import com.zhao.bean.Message_;
+import com.zhao.bean.Message;
 
 import java.util.List;
 
@@ -8,14 +8,14 @@ import java.util.List;
  */
 public interface MessageDaoI {
 
-    void addMessage(Message_ message_);
+    void addMessage(Message message);
 
     void deleteMessage(String uid);
 
-    void updateMeaage(Message_ message_);
+    void updateMeaage(Message message);
 
-    Message_ getMessage(String uid);
+    Message getMessage(String uid);
 
-    List<Message_> listMessage(long start, long end, String uname);
+    List<Message> listMessage(long start, long end, String uname);
 
 }

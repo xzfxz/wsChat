@@ -6,7 +6,6 @@ package com.zhao.ws;
 
 import com.alibaba.fastjson.JSON;
 import com.zhao.bean.Message;
-import com.zhao.bean.Message_;
 import com.zhao.bean.User;
 import com.zhao.dao.MessageDao;
 import com.zhao.dao.UserDao;
@@ -72,7 +71,7 @@ public class WebSocket {
     public void onMessage(String message, Session session) {
 
         if(message.contains("{")){
-            Message_ msg = JSON.parseObject(message, Message_.class);
+            Message msg = JSON.parseObject(message, Message.class);
 
             msg.setNickname(msg.getFrom());
             msg.setMsgAt(System.currentTimeMillis());
@@ -95,7 +94,7 @@ public class WebSocket {
             user.setSessionMark(session.getId());
             user.setLat(System.currentTimeMillis());
             user.setCat(System.currentTimeMillis());
-            userDao.addUser(user);
+//            userDao.addUser(user);
         }
 
 

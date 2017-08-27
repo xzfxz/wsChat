@@ -1,28 +1,88 @@
 package com.zhao.bean;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.io.Serializable;
 
 /**
- * Created by zhao on 17-8-16.
+ * Created by zhao on 17-8-9.
+ * 信息封装
  */
-public class Message {
 
-    private int type;//消息类型
+public class Message implements Serializable {
 
-    private String msg;//消息主题
+    private static final long serialVersionUID = 6084013618120400274L;
+    private String id;
 
-    private String host;// 发送者
+    private String from;
+    private String to;
 
-    private String[] dests;// 接受者
+    private String nickname;
 
-    private RoomInfo roomInfo;//聊天室信息
+    private String ua;
 
-    public int getType() {
-        return type;
+    private String msg;
+
+    private long msgAt;
+
+    private String pic;
+
+    private long clientcount;
+
+    public String getId() {
+        return id;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public long getClientcount() {
+        return clientcount;
+    }
+
+    public void setClientcount(long clientcount) {
+        this.clientcount = clientcount;
+    }
+
+    @Override
+    public String toString() {
+        String s = JSON.toJSONString(this);
+        return s;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getUa() {
+        return ua;
+    }
+
+    public void setUa(String ua) {
+        this.ua = ua;
     }
 
     public String getMsg() {
@@ -33,54 +93,72 @@ public class Message {
         this.msg = msg;
     }
 
-    public String getHost() {
-        return host;
+    public long getMsgAt() {
+        return msgAt;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setMsgAt(long msgAt) {
+        this.msgAt = msgAt;
     }
 
-    public String[] getDests() {
-        return dests;
+    public String getPic() {
+        return pic;
     }
 
-    public void setDests(String[] dests) {
-        this.dests = dests;
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
-    public RoomInfo getRoomInfo() {
-        return roomInfo;
+    public Document toDocuments(){
+        Document document = new Document();
+
+        document.put(Meta.From,getFrom());
+        document.put(Meta.To,getTo());
+        document.put(Meta.Nickname,getNickname());
+        document.put(Meta.Ua,getUa());
+        document.put(Meta.Msg,getMsg());
+        document.put(Meta.MsgAt,getMsgAt());
+        document.put(Meta.Pic,getPic());
+        document.put(Meta.Clientcount,getClientcount());
+        return document;
     }
 
-    public void setRoomInfo(RoomInfo roomInfo) {
-        this.roomInfo = roomInfo;
+    public Message toMessage(Document doc){
+        Message message_ = new Message();
+        String from = doc.getString(Meta.From);
+        String to = doc.getString(Meta.To);
+        String msg = doc.getString(Meta.Msg);
+        Long msgAt = doc.getLong(Meta.MsgAt);
+        String pic = doc.getString(Meta.Pic);
+        Long client = doc.getLong(Meta.Clientcount);
+        String ua = doc.getString(Meta.Ua);
+        ObjectId id = doc.getObjectId("_id");
+
+        message_.setId(id.toString());
+        message_.setClientcount(client);
+        message_.setMsg(msg);
+        message_.setNickname(nickname);
+        message_.setFrom(from);
+        message_.setTo(to);
+        message_.setMsgAt(msgAt);
+        message_.setPic(pic);
+        message_.setUa(ua);
+
+        return message_;
     }
 
+    public static final class Meta {
 
-    public Message() {
-        setType(MsgConstant.MsgToAll);
+
+        public static final String From = "from";
+        public static final String To = "to";
+        public static final String Nickname = "nickname";
+        public static final String Ua = "ua";
+        public static final String Msg = "msg";
+        public static final String MsgAt = "msgat";
+        public static final String Pic = "pic";
+        public static final String Clientcount = "clientcount";
+
     }
 
-    public Message(String host, int type) {
-        setHost(host);
-        setType(type);
-    }
-
-    public Message(String host, int type, String msg) {
-        this(host, type);
-        setMsg(msg);
-    }
-
-    public Message(String host, int type, String[] dests) {
-        this(host, type);
-        setDests(dests);
-    }
-
-    @Override
-    public String toString() {
-        // 序列化成json串
-        return JSONObject.toJSONString(this);
-    }
 }
-

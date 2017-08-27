@@ -43,7 +43,7 @@ public class UserDao implements UserDaoI {
         object.put(User.Meta.Lat, user.getLat());
         object.put(User.Meta.Vip, user.getVip());
         object.put(User.Meta.VipLevel, user.getVipLevel());
-
+        object.put(User.Meta.PhoneNum,user.getPhoneNum());
 
         BasicDBObject append = new BasicDBObject().append("$set", object);
 
@@ -70,10 +70,10 @@ public class UserDao implements UserDaoI {
         FindIterable<Document> documents = coll.find();
         BasicDBObject bb = null;
         if(0!=start && 0!=end){
-            bb = new BasicDBObject(User.Meta.Cat, new BasicDBObject("$gt", start).append("$lte", end));
+            bb = new BasicDBObject(User.Meta.Lat, new BasicDBObject("$gt", start).append("$lte", end));
         }
         if(0 !=start && 0==end){
-            bb = new BasicDBObject(User.Meta.Cat, new BasicDBObject("$gt", start).append("$lte", System.currentTimeMillis()));
+            bb = new BasicDBObject(User.Meta.Lat, new BasicDBObject("$gt", start).append("$lte", System.currentTimeMillis()));
         }
 
         if(null!=uname && !"".equals(uname.trim())){

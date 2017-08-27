@@ -57,7 +57,7 @@ public class TextController {
         //加入连接集合
         getConnections().add(this);
         //广播通知所有连接有新用户加入
-        broadcastToAll(new Message(getUserName(), MsgConstant.Open, getUsers()));
+//        broadcastToAll(new Message(getUserName(), MsgConstant.Open, getUsers()));
     }
 
     /**
@@ -68,7 +68,7 @@ public class TextController {
         //从连接集合中移除
         getConnections().remove(this);
         //广播通知所有连接有用户退出
-        broadcastToAll(new Message(getUserName(), MsgConstant.Close, getUsers()));
+//        broadcastToAll(new Message(getUserName(), MsgConstant.Close, getUsers()));
     }
 
     /**
@@ -80,13 +80,17 @@ public class TextController {
     public void OnMessage(String message) {
         //消息内容反序列化
         Message msg = JSONObject.parseObject(message, Message.class);
-        msg.setHost(getUserName());
+//        msg.setHost(getUserName());
         //对html代码进行转义
         msg.setMsg(txt2htm(msg.getMsg()));
-        if (msg.getDests() == null)
+        /*
+        if (msg.getDests() == null){
             broadcastToAll(msg);
-        else
+
+        }
+        else{
             broadcastToSpecia(msg);
+        }*/
     }
 
     @OnError
@@ -110,14 +114,17 @@ public class TextController {
      * @param msg
      */
     private static void broadcastToSpecia(Message msg) {
-        for (TextController client : getConnections())
+
+//        for (TextController client : getConnections())
             // 感觉用map进行映射会更好点
-            if (Contains(msg.getDests(), client.getUserName()))
-                client.call(msg);
+//            if (Contains(msg.getDests(), client.getUserName()))
+//                client.call(msg);
     }
 
     private void call(Message msg) {
-        try {
+
+
+      /*  try {
             synchronized (this) {
                 if (getUserName().equals(msg.getHost()) && msg.getType() == MsgConstant.Open)
                     msg.setRoomInfo(getRoomInfo());
@@ -131,11 +138,12 @@ public class TextController {
             }
             OnClose();
         }
+        */
     }
 
     private void requireLogin() {
         Message msg = new Message();
-        msg.setType(MsgConstant.RequireLogin);
+//        msg.setType(MsgConstant.RequireLogin);
         call(msg);
     }
 

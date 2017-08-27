@@ -15,6 +15,16 @@ public class User implements Serializable{
     private String id;
     private String name;
     private String sessionMark;
+    private String phoneNum;
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
     private int vip;
     private int vipLevel;
     private long cat;
@@ -100,10 +110,13 @@ public class User implements Serializable{
         Integer vipL = doc.getInteger(Meta.VipLevel);
         Long cat = doc.getLong(Meta.Cat);
         Long lat = doc.getLong(Meta.Lat);
+        String phoneNum = doc.getString(Meta.PhoneNum);
+
         ObjectId id = doc.getObjectId("_id");
 
         User user = new User();
         user.setId(id.toString());
+        user.setPhoneNum(phoneNum);
         user.setName(name);
         user.setCat(cat);
         user.setLat(lat);
@@ -122,6 +135,7 @@ public class User implements Serializable{
         public static final String VipLevel = "vipLevel";
         public static final String Cat = "cat";
         public static final String Lat = "lat";
+        public static final String PhoneNum="phoneNum";
 
     }
 }
