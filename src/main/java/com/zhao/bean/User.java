@@ -16,6 +16,20 @@ public class User implements Serializable{
     private String name;
     private String sessionMark;
     private String phoneNum;
+// 一个操作的标识，例如增加或者删除修改等
+    private String mark;
+    private int vip;
+    private int vipLevel;
+    private long cat;
+    private long lat;
+
+    public String getMark() {
+        return mark;
+    }
+
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
 
     public String getPhoneNum() {
         return phoneNum;
@@ -24,11 +38,6 @@ public class User implements Serializable{
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
-
-    private int vip;
-    private int vipLevel;
-    private long cat;
-    private long lat;
 
     public String getId() {
         return id;

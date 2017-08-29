@@ -12,9 +12,6 @@ import com.zhao.dao.UserDao;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.*;
@@ -25,18 +22,18 @@ import javax.websocket.server.ServerEndpoint;
  * 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
  */
 @ServerEndpoint("/wsChat")
-public class WebSocket {
+public class ChatWebSocket {
 
 
     private MessageDao messageDao = new MessageDao();
 
-    private UserDao userDao = new UserDao();
+//    private UserDao userDao = new UserDao();
 
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
-    private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<WebSocket>();
+    private static CopyOnWriteArraySet<ChatWebSocket> chatWebSocketSet = new CopyOnWriteArraySet<ChatWebSocket>();
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
 
@@ -47,7 +44,7 @@ public class WebSocket {
     @OnOpen
     public void onOpen(Session session){
         this.session = session;
-        webSocketSet.add(this); //加入set中
+        chatWebSocketSet.add(this); //加入set中
         addOnlineCount(); //在线数加
 //
 
@@ -58,7 +55,7 @@ public class WebSocket {
      */
     @OnClose
     public void onClose(){
-        webSocketSet.remove(this); //从set中删除
+        chatWebSocketSet.remove(this); //从set中删除
         subOnlineCount(); //在线数减
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
     }
@@ -80,7 +77,7 @@ public class WebSocket {
             messageDao.addMessage(msg);
 
 //群发消息
-            for(WebSocket item: webSocketSet){
+            for(ChatWebSocket item: chatWebSocketSet){
                 try {
                     item.sendMessage(msg);
                 } catch (IOException e) {
@@ -130,9 +127,9 @@ public class WebSocket {
         return onlineCount;
     }
     public static synchronized void addOnlineCount() {
-        WebSocket.onlineCount++;
+        ChatWebSocket.onlineCount++;
     }
     public static synchronized void subOnlineCount() {
-        WebSocket.onlineCount--;
+        ChatWebSocket.onlineCount--;
     }
 }

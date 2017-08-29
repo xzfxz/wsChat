@@ -1,0 +1,134 @@
+/*清除默认样式*/
+body, div, p, h1, h2, h3, h4, h5, h6, ul, li, ol, dl, dt, dd {
+
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    list-style: none;
+    font-family: SimHei;
+}
+
+i{
+    font-style: normal;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+input, img {
+
+    padding: 0;
+    margin: 0;
+    border: 0 none;
+    outline-style: none;
+    font-size: .9rem;
+
+}
+
+.clearfix:after {
+    content: "";
+    height: 0;
+    line-height: 0;
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+body {
+    color: #333333;
+    overflow-x: hidden;
+    clear: both;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+/*适配*/
+@media only screen and (width: 320px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (width: 360px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (width: 375px) {
+    html {
+        font-size: 18.75px;
+    }
+}
+
+@media only screen and (width: 400px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (width: 412px) {
+    html {
+        font-size: 20.6px;
+    }
+}
+
+@media only screen and (width: 414px) {
+    html {
+        font-size: 20.7px;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    html {
+        font-size: 32px;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    html {
+        font-size: 37.5px;
+    }
+}
+
+@media only screen and (min-width: 1080px) {
+    html {
+        font-size: 54px;
+    }
+}
+
+/*index*/
+.container{
+    width: 100%;
+    overflow: hidden;
+}
+
+.form_text{
+    float: left;
+    width: 80%;
+    margin: 3rem 10%;
+}
+
+.form_text ul li{
+    width: 100%;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1rem;
+    border-bottom: 1px solid #cccccc;
+}
+
+.form_text ul li:first-child{
+    border-top: 1px solid #cccccc;
+}

@@ -1,10 +1,9 @@
 package com.zhao.test;
 
-import com.zhao.bean.Message_;
+import com.zhao.bean.Message;
 import com.zhao.bean.User;
 import com.zhao.dao.MessageDao;
 import com.zhao.dao.UserDao;
-import com.zhao.dao.UserDaoI;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class Dotest {
 
     public static void main(String[] args) {
         MessageDao messageDao = new MessageDao();
-        List<Message_> message_s = messageDao.listMessage(0, 0, null);
+        List<Message> message_s = messageDao.listMessage(0, 0, null);
 //        System.out.println(message_s);
 
         UserDao userDao = new UserDao();

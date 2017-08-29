@@ -103,13 +103,25 @@
 
 
 //        var url='ws://192.168.12.158:8084/ws/';
-        var pathName=window.location.pathname;
+        //        192.168.12.158:8084
         var hostName =window.location.host;
 
+        //        "/zhao/index.html"
+        var pathName=window.location.pathname;
+
+        console.log(hostName);
+        console.log(pathName);
+
+        //通过pathName解析到/zhao/即可
+        var position = pathName.indexOf("/",1);
+        var pathName = pathName.substring(0,position+1);
+
+        console.log(pathName);
         var path=hostName+pathName;
-        console.log(path);
+
+
         var wsPath="ws://"+path+'wsChat';
-        console.log(wsPath);
+
         var ws= new WebSocket(wsPath);
 
         function appendLog(type,nickname, message,client_count) {
