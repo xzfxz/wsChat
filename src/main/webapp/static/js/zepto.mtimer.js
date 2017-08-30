@@ -96,6 +96,7 @@ a?"1":"0"),e)}}};p.utils=d;"undefined"!=typeof module&&module.exports?module.exp
 					sDate = dateStart.getDate();
 				for(var i=0; i<option.dateNum; i++){
 					var nextDate = new Date(sYear, sMonth, sDate+i),
+						y=nextDate.getFullYear();
 						m = nextDate.getMonth()+1,
 						d = nextDate.getDate(),
 						da = nextDate.getDay(),
@@ -107,7 +108,7 @@ a?"1":"0"),e)}}};p.utils=d;"undefined"!=typeof module&&module.exports?module.exp
 					if(d < 10){
 						d = '0' + d;
 					}
-					dateStr += '<li class="'+sel+'" data-date="'+m+'-'+d+'">'+m+'月'+d+'日&nbsp;星期'+w+'</li>';
+					dateStr += '<li class="'+sel+'" data-date="'+y+'-'+m+'-'+d+'">'+y+'年'+m+'月'+d+'日&nbsp;星期'+w+'</li>';
 				}
 				dateStr += '<li></li><li></li>';
 				mpDate.find('ul').append(dateStr);
@@ -117,9 +118,9 @@ a?"1":"0"),e)}}};p.utils=d;"undefined"!=typeof module&&module.exports?module.exp
 				for(var j=0; j<option.timeNum; j++){
 					var t = option.timeStart + j,
 						sel = j == 0 ? 'selected' : '';
-					timeStr += '<li class="'+sel+'" data-time="'+t+':00">'+t+':00</li><li data-time="'+t+':30">'+t+':30</li>';
+					timeStr += '<li class="'+sel+'" data-time="'+t+':00:00">'+t+':00:00</li><li data-time="'+t+':30:00">'+t+':30:00</li>';
 					if(j==option.timeNum - 1){
-						timeStr += '<li data-time="'+(t+1)+':00">'+(t+1)+':00</li>';
+						timeStr += '<li data-time="'+(t+1)+':00:00">'+(t+1)+':00:00</li>';
 					}
 				}
 				timeStr += '<li></li><li></li>';

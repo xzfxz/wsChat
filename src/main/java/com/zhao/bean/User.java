@@ -16,8 +16,8 @@ public class User implements Serializable{
     private String name;
     private String sessionMark;
     private String phoneNum;
-// 一个操作的标识，例如增加或者删除修改等
     private String mark;
+
     private int vip;
     private int vipLevel;
     private long cat;
@@ -38,6 +38,7 @@ public class User implements Serializable{
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
+
 
     public String getId() {
         return id;
@@ -108,6 +109,7 @@ public class User implements Serializable{
         document.put(Meta.Lat,getLat());
         document.put(Meta.SessionMark,getSessionMark());
         document.put(Meta.Vip,getVip());
+        document.put(Meta.PhoneNum,getPhoneNum());
         document.put(Meta.VipLevel,getVipLevel());
         return document;
     }

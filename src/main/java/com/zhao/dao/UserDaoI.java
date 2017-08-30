@@ -1,12 +1,14 @@
 package com.zhao.dao;
 
 import com.zhao.bean.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by zhao on 17-8-18.
  */
+@Repository
 public interface UserDaoI {
     void addUser(User user);
     void deleteUser(String uid);

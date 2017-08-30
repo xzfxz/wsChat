@@ -25,14 +25,13 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * Created by zhao on 17-8-16.
  */
 
-@ServerEndpoint(value = "/ws/user", configurator = WsConfigurator.class)
+@ServerEndpoint(value = "/ws/user")
 public class UserWebSocket {
 
     private Session session;
 
     private UserDaoI userDao = new UserDao();
 
-    private HttpSession httpSession;
 
     //连接集合
     private static final Set<UserWebSocket> connections = new CopyOnWriteArraySet<UserWebSocket>();
@@ -48,7 +47,6 @@ public class UserWebSocket {
         //设置websock连接的session
         setSession(session);
         // 获取HttpSession
-        httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         //加入连接集合
         getConnections().add(this);
         //广播通知所有连接有新用户加入
@@ -81,8 +79,6 @@ public class UserWebSocket {
 
         if("1".equals(trim)){
             String name = user.getName();
-            httpSession.setAttribute("user",name);
-
             userDao.addUser(user);
 
         }

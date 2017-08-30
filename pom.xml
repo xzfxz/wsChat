@@ -7,6 +7,10 @@
   <version>1.0-SNAPSHOT</version>
   <name>ws Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <spring.version>4.0.2.RELEASE</spring.version>
+  </properties>
+
   <dependencies>
 
     <dependency>
@@ -47,8 +51,34 @@
       <artifactId>fastjson</artifactId>
       <version>1.1.32</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
   </dependencies>
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <finalName>ws</finalName>
   </build>
 </project>

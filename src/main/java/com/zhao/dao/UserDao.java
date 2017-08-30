@@ -9,6 +9,8 @@ import com.zhao.bean.User;
 import com.zhao.tool.MongoManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-/*Çå³ýÄ¬ÈÏÑùÊ½*/
+/*ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½Ê½*/
 body, div, p, h1, h2, h3, h4, h5, h6, ul, li, ol, dl, dt, dd {
 
     margin: 0;
@@ -54,7 +54,7 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 textarea {
     -webkit-appearance: none;
 }
-/*ÊÊÅä*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 @media only screen and (width: 320px) {
     html {
         font-size: 16px;
@@ -131,4 +131,59 @@ textarea {
 
 .form_text ul li:first-child{
     border-top: 1px solid #cccccc;
+}
+
+/*form*/
+.form_container{
+    width: 94%;
+    margin: 1.5rem 3%;
+    float: left;
+}
+
+.form_container table{
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+
+.form_container table thead tr{
+    height: 1.8rem;
+    line-height: 1.8rem;
+}
+
+.form_container table thead tr th{
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 100;
+    width: 25%;
+    border-bottom: 1px solid #cccccc;
+}
+.form_container table tbody tr{
+    margin: .5rem 0;
+    height: 3rem;
+}
+.form_container table tbody tr td{
+    text-align: center;
+    font-size: .9rem;
+    border-bottom: 1px solid #cccccc;
+}
+
+.form_container table tbody tr td a:first-child{
+    border-right: 2px solid #999999;
+    float: left;
+    width: 50%;
+    display: block;
+}
+
+
+#su{
+    width: 50%; margin: 2rem 25%;
+    border: 1px solid #cccccc;
+    background: #fff;
+    border-radius: .2rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+    font-size: .9rem;
 }

@@ -1,6 +1,5 @@
 package com.zhao.test;
 
-import com.zhao.bean.Message;
 import com.zhao.bean.User;
 import com.zhao.dao.MessageDao;
 import com.zhao.dao.UserDao;
@@ -14,7 +13,6 @@ public class Dotest {
 
     public static void main(String[] args) {
         MessageDao messageDao = new MessageDao();
-        List<Message> message_s = messageDao.listMessage(0, 0, null);
 //        System.out.println(message_s);
 
         UserDao userDao = new UserDao();
