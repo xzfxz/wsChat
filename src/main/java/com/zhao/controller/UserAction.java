@@ -22,13 +22,31 @@ public class UserAction {
     @Resource(name="userDao")
     private UserDao userDao;
 
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-
+    private SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
     @RequestMapping(value = "/list")
     public String list(HttpServletRequest request){
         String result="user/list";
-        List<User> list = userDao.list(0, 0, "");
+        String start = request.getParameter("start");
+        long time= System.currentTimeMillis();
+        long oneDay=86400000L;
 
+        if(null==start ||start.trim().equals("")){
+            Date date = new Date(time);
+            start=sdf2.format(date);
+        }
+
+        try {
+            Date date = sdf2.parse(start.trim());
+            time = date.getTime();
+
+        } catch (Exception e) {
+
+        }
+        List<User> list = userDao.list(time, time+oneDay, "");
+
+        request.setAttribute("start",start);
         request.setAttribute("data",list);
 
         return result;
@@ -41,10 +59,7 @@ public class UserAction {
         User user = userDao.getUser(uid);
         long lat = user.getLat();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = sdf.format(new Date(lat));
-
-
         user.setMark(format);
         request.setAttribute("data",user);
         return result;
@@ -76,7 +91,7 @@ public class UserAction {
 
         user.setName(name);
         user.setPhoneNum(phone);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         long times=0;
         try {
             Date parse = sdf.parse(time);

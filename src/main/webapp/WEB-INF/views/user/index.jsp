@@ -64,7 +64,7 @@
 
         $("#su").attr("disabled", true);
         $("#doForm").attr("action","${path}/user/add");
-        console.log($("#doForm").attr("action"));
+//        console.log($("#doForm").attr("action"));
         $("#doForm").submit();
 
     }

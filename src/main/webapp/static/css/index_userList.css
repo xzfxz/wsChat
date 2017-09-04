@@ -187,3 +187,28 @@ textarea {
     vertical-align: middle;
     font-size: .9rem;
 }
+/*
+#zhao {
+text-align: center;
+font-size: 1.1rem;
+}
+*/
+
+/*top button*/
+.top_wrap{
+    float: left;
+    width: 100%;
+}
+
+.top_wrap #zhao{
+    width: 90%;
+    margin: 0 5%;
+    font-size: 1.1rem;
+}
+.top_wrap #picktime{
+    width: 40%; height: 1.2rem; line-height: 1.2rem; font-size: 1rem; border: 1px solid #cccccc; border-radius: 2px; padding: 5px;
+}
+
+.top_wrap #su2{
+    width: 30%; height: 1.2rem; line-height: 1.2rem; background: #fff; border: 1px solid #cccccc; border-radius: 2px;padding: 5px;
+}

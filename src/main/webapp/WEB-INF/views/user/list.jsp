@@ -11,13 +11,23 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <title>报名列表</title>
     <link rel="stylesheet" href="${path}/static/css/index_userList.css" charset="utf-8"/>
+    <link rel="stylesheet" href="${path}/static/css/zepto.mtimer.css" charset="UTF-8"/>
 </head>
 <body>
 <div class="form_container">
-    <table cellpadding="0" cellspacing="0">
 
+
+    <div class="top_wrap">
+        <form id="zhao" action="#" method="post">
+            日期:<input id="picktime" name = "start" value="${start}" readonly>
+            <button id="su2" type="button" class="input" onclick="doCommite()">提交</button>
+        </form>
+    </div>
+
+    <table cellpadding="0" cellspacing="0">
         <thead>
-            <tr>
+
+        <tr>
                 <th>姓名</th>
                 <th>电话</th>
                 <th>时间</th>
@@ -44,9 +54,27 @@
 </div>
 </body>
 <script src="${path}/static/js/zepto.js" charset="UTF-8" type="text/javascript"></script>
+<script src="${path}/static/js/zepto.mtimer2.js" charset="UTF-8" type="text/javascript"></script>
+
 <script>
+
+    $(function(){
+
+        $('#picktime').mtimer();
+
+    });
+
+    function doCommite() {
+        var start = $("#picktime").val();
+        console.log(start);
+
+        $("#zhao").attr("action","${path}/user/list");
+        console.log("change");
+        $("#zhao").submit();
+    }
     function add2() {
         window.location.href = "${path}/user/index";
     }
 </script>
+
 </html>

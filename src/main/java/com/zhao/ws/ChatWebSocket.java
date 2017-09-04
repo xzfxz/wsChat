@@ -25,7 +25,7 @@ import javax.websocket.server.ServerEndpoint;
 public class ChatWebSocket {
 
 
-    private MessageDao messageDao = new MessageDao();
+//    private MessageDao messageDao = new MessageDao();
 
 //    private UserDao userDao = new UserDao();
 
@@ -74,7 +74,7 @@ public class ChatWebSocket {
             msg.setMsgAt(System.currentTimeMillis());
             msg.setClientcount(onlineCount);
 
-            messageDao.addMessage(msg);
+//            messageDao.addMessage(msg);
 
 //群发消息
             for(ChatWebSocket item: chatWebSocketSet){
