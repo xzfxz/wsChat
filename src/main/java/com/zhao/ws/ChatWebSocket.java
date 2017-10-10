@@ -85,7 +85,10 @@ public class ChatWebSocket {
 
             if(0==msg.getType()){
                 this.name = msg.getFrom();
-                names.add(name);
+//               排除null的情况
+                if(null!=name&&!"".equals(name)){
+                    names.add(name);
+                }
                 //将在线用户返回给新登录的用户
                 String usersJson = JSON.toJSONString(names);
                 System.out.println("userJson: "+usersJson);
