@@ -5,13 +5,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.UpdateResult;
-import com.zhao.bean.Message;
 import com.zhao.bean.Message;
 import com.zhao.tool.MongoManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +48,6 @@ public class MessageDao implements MessageDaoI {
         object.put(Message.Meta.Nickname, message.getNickname());
         object.put(Message.Meta.Ua, message.getUa());
         object.put(Message.Meta.Pic, message.getPic());
-        object.put(Message.Meta.Clientcount, message.getClientcount());
 
         BasicDBObject append = new BasicDBObject().append("$set", object);
 

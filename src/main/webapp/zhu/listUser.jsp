@@ -10,6 +10,7 @@
 
 
 </head>
+<title>报名列表页</title>
 <body>
 
 <div class="container">

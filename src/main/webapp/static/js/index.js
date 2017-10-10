@@ -1,28 +1,3 @@
-
-var hostName =window.location.host;
-var pathName=window.location.pathname;
-var position = pathName.indexOf("/",1);
-var pathName = pathName.substring(0,position+1);
-var path=hostName+pathName;
-
-var wsPath="ws://"+path+'ws/user';
-console.log(wsPath);
-var ws= new WebSocket(wsPath);
-
-function appendLog(type,msg) {
-
-
-}
-ws.onopen = function (e) {
-
-};
-ws.onmessage = function(e){
-    var data = JSON.parse(e.data);
-    var type=e.type;
-
-    appendLog(type,data);
-};
-
 function sendMessage(){
 
     var name = $('#name').val().trim();

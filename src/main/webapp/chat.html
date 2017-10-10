@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>websockt 在线聊天</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/bootstrap.3.3.7.min.css">
+    <link rel="stylesheet" href="static/css/tether.css"/>
+    <link rel="stylesheet" href="static/css/sweetalert.css"/>
+    <link rel="stylesheet" href="static/css/index_html.css" charset="utf-8"/>
+
+    <script src="static/js/jquery.min.2.2.4.js" ></script>
+    <script src="static/js/bootstrap.3.3.6.min.js"></script>
+    <script src="static/js/jquery.cookie.js"></script>
+    <script src="static/js/tether.js"></script>
+    <script src="static/js/sweetalert.min.js"></script>
+
+</head>
+<body lang="cn">
+
+<div class="vertical-center">
+
+    <div class="container">
+        <h2>多人在线聊天</h2>
+        <hr/>
+        <div><P>当前在线： <ul id="onLine"></ul></P></div>
+        <div id="talkArea" class="talkArea">
+            <ul id="messages" class="list-unstyled">
+
+            </ul>
+        </div>
+
+        <ul id="one" class="">
+
+        </ul>
+        <hr />
+        <form role="form" id="chat_form" onsubmit="sendMessage(); return false;">
+            <div class="form-group">
+                <input class="form-control" type="text" name="message" id="message"
+                       placeholder="输入聊天内容" value="" autofocus/>
+            </div>
+            <button type="button" id="send" class="btn btn-primary"
+                    onclick="sendMessage();">发送!</button>
+        </form>
+
+    </div>
+</div>
+</body>
+
+<script>
+
+    //从cookie中设置用户名，或没有则，弹出窗体，设置用户名
+    $(function () {
+//            初始化div的 滚轴
+        var talkArea =document.getElementById('talkArea');
+//            talkArea.scrollTop=0;
+        talkArea.scrollTop=talkArea.scrollHeight;
+
+//            初始化 判断
+        var name = $.cookie("Uname");
+        if(name == null){
+            addUser();
+        }
+    });
+
+    //通知消息弹到浏览器上
+    function doNotice(name,notice) {
+        var button = document.getElementById('btn');
+
+        if (window.Notification) {
+            var popNotice = function() {
+                if (Notification.permission == "granted") {
+                    var notification = new Notification(name, {
+                        body: notice,
+                        icon: 'http://59.110.212.84/pic/zhao.jpg'
+                    });
+
+                    notification.onclick = function() {
+//                            text.innerHTML = '消息已于' + new Date().toTimeString().split(' ')[0]+"送达";
+                        notification.close();
+                    };
+                }
+            };
+
+            button.onclick = function() {
+                if (Notification.permission == "granted") {
+                    popNotice();
+                } else if (Notification.permission != "denied") {
+                    Notification.requestPermission(function (permission) {
+                        popNotice();
+                    });
+                }
+            };
+            $("#btn").trigger("click");
+        } else {
+            alert('浏览器不支持Notification');
+        }
+    }
+
+
+
+    <!--消息通知-->
+    function noticemsg(msg) {
+        console.log(msg);
+        swal("消息来了",""+msg+"");
+
+    }
+
+    //添加用户到cookie的方法
+    function addUser() {
+        swal({
+            title: "请输入用户名！",
+            text: "尽量文雅一些",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "人生若只如初见"
+        }, function(inputValue) {
+            if (inputValue === false) {
+                return false;
+            }
+            if (inputValue === "") {
+                swal.showInputError("内容不能为空！");
+                return false;
+            }
+            swal("Nice!", "你输入的是：" + inputValue, "success");
+            $.cookie("Uname",inputValue,{ expires: 7, path: '/' });
+
+        })
+    }
+
+    var hostName =window.location.host;
+    var pathName=window.location.pathname;
+    var position = pathName.indexOf("/",1);
+    var pathName = pathName.substring(0,position+1);
+    var path=hostName+pathName;
+
+    var wsPath="ws://"+path+'wsChat';
+    var ws= new WebSocket(wsPath);
+
+    function appendUser(user) {
+        var ul = document.getElementById('onLine');
+        var li = document.createElement("li");
+        var message_text = "<span>" +  user + "</span>";
+        li.innerHTML = message_text;
+        ul.appendChild(li);
+    }
+
+//添加聊天内容到页面对应的div中
+    function appendChatContent(nickname, message) {
+        var ul = document.getElementById('messages');
+        var li = document.createElement("li");
+
+        var preface_label = "<span class=\"label label-success\">" + nickname + "</span>";
+        var message_text = "<h2>" + preface_label + "  " + message + "</h2>";
+        li.innerHTML = message_text;
+        ul.appendChild(li);
+
+/*        var count_people = document.getElementById("count_people");
+        count_people.innerHTML = client_count;*/
+        /*判断当前窗口是否活动
+         console.log(document.visibilityState);
+         console.log("----");
+         console.log(document.hidden);
+         */
+        if(document.visibilityState =="visible"){
+
+        }else {
+            doNotice(nickname,message);
+        }
+    }
+
+
+    ws.onopen = function (e) {
+        var name = $.cookie("Uname");
+//        发送用户到server端
+        doSend(name,"",0);
+//        console.log("onOpen"+e);
+    };
+
+    ws.onmessage = function(e){
+//        console.log("onMsg"+e);
+        var data = JSON.parse(e.data);
+//        console.log(data);
+        var nickname = data.nickname;
+        var msg = data.msg;
+        var msgType = data.type;
+//      判断返回信息的类型，1为聊天内容
+        if(1==msgType){
+            appendChatContent(nickname, msg);
+        }
+//        0 为发送的在线人数
+        if(0==msgType){
+//解析json数组
+//            console.log("items:"+msg);
+            $("#onLine").empty();
+            var items = eval(msg);
+            items.forEach(function (value,index,array) {
+                appendUser(value);
+            });
+/*          forEach 迭代函数接收一个在每一项可运行的函数，其中参数value ，index 和array分别
+            代表 数值，索引，以及数组本身。
+            for(var i = 0;i<items.length;i++){
+                var item = items[i];
+                appendUser(item);
+            }
+*/
+
+        }
+
+//        当消息来的时候，将滚轴下移
+        var div=document.getElementById('talkArea');
+        div.scrollTop=div.scrollHeight;
+    };
+
+//    发送聊天内容
+    function sendMessage(){
+        var msg = $('#message').val().trim();
+        var name= $.cookie("Uname");
+        if(msg.length<1){
+            alert("不能发送空内容！");
+            return;
+        }
+        doSend(name,msg,1);
+        $('#message').val("");
+        $('#message').focus();
+    }
+    function doSend(name,msg,ty) {
+        //mm 是对消息的封装，json形式，msg消息内容，from，发送者，to接收者，nickname，昵称，
+        // ua，浏览器信息，msgAt，发送时间，pic图片信息，type 消息类型，默认是1
+        var mm={
+            msg:msg,
+            from:name,
+            to:'zhao',
+            nickname:name,
+            ua:"",
+            msgAt:"",
+            pic:"",
+            type:ty
+        };
+        var mStr = JSON.stringify(mm);
+        ws.send(mStr);
+
+    }
+
+
+</script>
+
+</html>
