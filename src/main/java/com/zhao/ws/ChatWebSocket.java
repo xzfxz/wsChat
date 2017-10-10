@@ -88,6 +88,7 @@ public class ChatWebSocket {
                 names.add(name);
                 //将在线用户返回给新登录的用户
                 String usersJson = JSON.toJSONString(names);
+                System.out.println("userJson: "+usersJson);
                 msg.setMsg(usersJson);
             }
             chatWebSocket.sendMessage(msg);
