@@ -19,7 +19,7 @@ import java.util.List;
 public class MessageDao implements MessageDaoI {
 
     private static final  String Table="message";
-
+// 获取默认的数据库 zhao_ws
     private MongoDatabase mongoDatabase = MongoManager.getDB(null);
 
     private MongoCollection<Document> coll = mongoDatabase.getCollection(Table);
