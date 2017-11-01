@@ -1,0 +1,17 @@
+apply plugin:'groovy';
+
+task hello {
+    doFirst {
+        println 'first'
+    }
+
+    doLast {
+        println 'last'
+    }
+
+    println 'hello task'
+}
+
+task hello2 << {
+    println 'hello2'
+}
