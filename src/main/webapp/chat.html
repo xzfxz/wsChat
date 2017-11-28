@@ -134,11 +134,23 @@
 
     var hostName =window.location.host;
     var pathName=window.location.pathname;
+
+    console.log(hostName);
+    console.log(pathName);
     var position = pathName.indexOf("/",1);
+    console.log(position);
     var pathName = pathName.substring(0,position+1);
-    var path=hostName+pathName;
+    console.log(pathName);
+    if(pathName==""){
+        var path=hostName+"/";
+    }else{
+        var path=hostName+pathName;
+    }
+
 
     var wsPath="ws://"+path+'wsChat';
+
+    console.log(wsPath);
     var ws= new WebSocket(wsPath);
 
     function appendUser(user) {
