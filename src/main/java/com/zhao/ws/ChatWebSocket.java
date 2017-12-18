@@ -12,6 +12,8 @@ import com.zhao.dao.UserDao;
 
 import java.io.IOException;
 
+import java.util.Enumeration;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.*;
@@ -32,8 +34,11 @@ public class ChatWebSocket {
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
-    //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
-    private static CopyOnWriteArraySet<ChatWebSocket> chatWebSocketSet = new CopyOnWriteArraySet<ChatWebSocket>();
+    //concurrent包的线程安全Set，用来存放每个客户端对应的ChatWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
+    private static ConcurrentHashMap<String,ChatWebSocket> map = new ConcurrentHashMap<String,ChatWebSocket>();
+
+    private static CopyOnWriteArraySet<String> names = new CopyOnWriteArraySet();
+    private String name;
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
 
@@ -44,18 +49,19 @@ public class ChatWebSocket {
     @OnOpen
     public void onOpen(Session session){
         this.session = session;
-        chatWebSocketSet.add(this); //加入set中
+//        chatWebSocketSet.add(this); //加入set中
+        map.put(session.getId(),this);
         addOnlineCount(); //在线数加
-//
-
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
+
     }
     /**
      * 连接关闭调用的方法
      */
     @OnClose
     public void onClose(){
-        chatWebSocketSet.remove(this); //从set中删除
+//        chatWebSocketSet.remove(this); //从set中删除
+        map.remove(session.getId());
         subOnlineCount(); //在线数减
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
     }
@@ -67,34 +73,33 @@ public class ChatWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
 
-        if(message.contains("{")){
-            Message msg = JSON.parseObject(message, Message.class);
+        Message msg = JSON.parseObject(message, Message.class);
+        msg.setMsgAt(System.currentTimeMillis());
 
-            msg.setNickname(msg.getFrom());
-            msg.setMsgAt(System.currentTimeMillis());
-            msg.setClientcount(onlineCount);
 
-//            messageDao.addMessage(msg);
+        Enumeration<String> keys = map.keys();
 
-//群发消息
-            for(ChatWebSocket item: chatWebSocketSet){
-                try {
-                    item.sendMessage(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    continue;
+        while (keys.hasMoreElements()){
+            String s = keys.nextElement();
+            ChatWebSocket chatWebSocket = map.get(s);
+
+            if(0==msg.getType()){
+                this.name = msg.getFrom();
+//               排除null的情况
+                if(null!=name&&!"".equals(name)){
+                    names.add(name);
                 }
+                //将在线用户返回给新登录的用户
+                String usersJson = JSON.toJSONString(names);
+                System.out.println("userJson: "+usersJson);
+                msg.setMsg(usersJson);
             }
-        }else{
-            User user = new User();
-            user.setName(message);
-            user.setSessionMark(session.getId());
-            user.setLat(System.currentTimeMillis());
-            user.setCat(System.currentTimeMillis());
-//            userDao.addUser(user);
+            chatWebSocket.sendMessage(msg);
         }
 
+    }
 
+    public void dealMsg(){
 
     }
     /**
@@ -112,10 +117,14 @@ public class ChatWebSocket {
      * @param message
      * @throws IOException
      */
-    public void sendMessage(Object message) throws IOException{
-        RemoteEndpoint.Basic basicRemote = this.session.getBasicRemote();
+    public void sendMessage(Object message){
 
-        basicRemote.sendText(message.toString());
+        RemoteEndpoint.Basic basicRemote = this.session.getBasicRemote();
+        try {
+            basicRemote.sendText(message.toString());
+        } catch (IOException e) {
+
+        }
 
     }
     public void sendOtherMessage(String msg){

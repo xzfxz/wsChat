@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="static/css/bootstrap.3.3.7.min.css">
+    <meta charset="UTF-8">
+    <title>jquery-Test</title>
+    <script src="static/js/jquery.min.2.2.4.js" ></script>
+    <script src="static/js/bootstrap.3.3.6.min.js"></script>
+</head>
+<body>
+    <h1 >练习</h1>
+    <P id="p1" class="no">one. <span class="active"> hello <span class="ch">?</span> </span> <span>world</span></P>
+    <textarea id="p2">
+        three. good
+    </textarea>
+    <p id="p3" class="active">two. nice</p>
+    <ol>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+    </ol>
+    <a class="append_dom">append dom</a>
+    <br>
+    <a class="remove_dom">remove dom</a>
+    <br>
+    <a class="send_ajax">send ajax</a>
+</body>
+<script>
+    $(function () {
+        var parent_c = $(".ch").parent().attr("class");
+        console.log("parent_c:"+parent_c);
+        
+        $(".send_ajax").click(function () {
+
+           $.ajax({
+               url:"/xxx/xxx",
+               type:"POST",
+               async:true,
+               data:{
+                   name:'zhao',
+                   sex:'man'
+               },
+               dataType:"json",
+               error:function (XMLHttpRequest, textStatus, errorThrown) {
+                   console.log(XMLHttpRequest);
+                   console.log(textStatus);
+                   console.log(errorThrown);
+               },
+               success:function (data) {
+                   console.log(data);
+               }
+           })
+        });
+    })
+
+</script>
+<script>
+    $(function () {
+        $(".append_dom").click(function () {
+            $("ol").append("<li class='active'>new item</li>")
+        });
+        $(".remove_dom").click(function () {
+            $(".active").remove();
+        });
+
+    })
+</script>
+<script>
+    $(function () {
+        var c1 = $("#p1").text();
+        var c2 = $("#p1").html();
+        var c3 = $("#p1").val();
+        console.log(c1);
+        console.log(c2);
+        console.log(c3);
+        console.log("--------")
+    });
+</script>
+<script>
+    $(function () {
+
+        var c3 = $("#p2").val();
+
+        console.log(c3);
+        console.log("--------")
+
+        $("#p2").click(function () {
+            var id = $(this).attr("id");
+            console.log("id:"+id);
+        })
+
+    });
+</script>
+</html>

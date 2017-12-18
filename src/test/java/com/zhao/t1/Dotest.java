@@ -1,8 +1,9 @@
-package com.zhao.test;
+package com.zhao.t1;
 
 import com.zhao.bean.User;
 import com.zhao.dao.MessageDao;
 import com.zhao.dao.UserDao;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -11,6 +12,10 @@ import java.util.List;
  */
 public class Dotest {
 
+    @Test
+    public void dotest01(){
+
+    }
     public static void main(String[] args) {
         MessageDao messageDao = new MessageDao();
 //        System.out.println(message_s);

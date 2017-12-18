@@ -198,6 +198,7 @@ font-size: 1.1rem;
 .top_wrap{
     float: left;
     width: 100%;
+    text-align:center;
 }
 
 .top_wrap #zhao{
@@ -206,9 +207,18 @@ font-size: 1.1rem;
     font-size: 1.1rem;
 }
 .top_wrap #picktime{
-    width: 40%; height: 1.2rem; line-height: 1.2rem; font-size: 1rem; border: 1px solid #cccccc; border-radius: 2px; padding: 5px;
+    width: 45%; height: 1.2rem; line-height: 1.2rem; font-size: 1rem; border: 1px solid #cccccc; border-radius: 2px; padding: 5px;
 }
 
 .top_wrap #su2{
-    width: 30%; height: 1.2rem; line-height: 1.2rem; background: #fff; border: 1px solid #cccccc; border-radius: 2px;padding: 5px;
+    width: 15%; height: 1.2rem; line-height: 1.2rem; background: #fff; border: 1px solid #cccccc; border-radius: 2px;padding: 5px;
 }
+
+/*
+width: 40%;
+height: 1.2rem;
+line-height: 1.2rem;
+font-size: 1rem;
+border: 1px solid #cccccc;
+border-radius: 2px;
+padding: 5px;*/

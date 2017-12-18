@@ -5,13 +5,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.UpdateResult;
-import com.zhao.bean.Message;
 import com.zhao.bean.Message;
 import com.zhao.tool.MongoManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.List;
 public class MessageDao implements MessageDaoI {
 
     private static final  String Table="message";
-
+// 获取默认的数据库 zhao_ws
     private MongoDatabase mongoDatabase = MongoManager.getDB(null);
 
     private MongoCollection<Document> coll = mongoDatabase.getCollection(Table);
@@ -51,7 +48,6 @@ public class MessageDao implements MessageDaoI {
         object.put(Message.Meta.Nickname, message.getNickname());
         object.put(Message.Meta.Ua, message.getUa());
         object.put(Message.Meta.Pic, message.getPic());
-        object.put(Message.Meta.Clientcount, message.getClientcount());
 
         BasicDBObject append = new BasicDBObject().append("$set", object);
 

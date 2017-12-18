@@ -29,7 +29,15 @@ public class Message implements Serializable {
 
     private String pic;
 
-    private long clientcount;
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getId() {
         return id;
@@ -55,13 +63,6 @@ public class Message implements Serializable {
         this.to = to;
     }
 
-    public long getClientcount() {
-        return clientcount;
-    }
-
-    public void setClientcount(long clientcount) {
-        this.clientcount = clientcount;
-    }
 
     @Override
     public String toString() {
@@ -119,7 +120,7 @@ public class Message implements Serializable {
         document.put(Meta.Msg,getMsg());
         document.put(Meta.MsgAt,getMsgAt());
         document.put(Meta.Pic,getPic());
-        document.put(Meta.Clientcount,getClientcount());
+
         return document;
     }
 
@@ -130,12 +131,12 @@ public class Message implements Serializable {
         String msg = doc.getString(Meta.Msg);
         Long msgAt = doc.getLong(Meta.MsgAt);
         String pic = doc.getString(Meta.Pic);
-        Long client = doc.getLong(Meta.Clientcount);
+
         String ua = doc.getString(Meta.Ua);
         ObjectId id = doc.getObjectId("_id");
 
         message_.setId(id.toString());
-        message_.setClientcount(client);
+
         message_.setMsg(msg);
         message_.setNickname(nickname);
         message_.setFrom(from);
@@ -157,8 +158,6 @@ public class Message implements Serializable {
         public static final String Msg = "msg";
         public static final String MsgAt = "msgat";
         public static final String Pic = "pic";
-        public static final String Clientcount = "clientcount";
-
     }
 
 }

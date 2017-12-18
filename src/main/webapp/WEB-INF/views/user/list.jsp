@@ -19,8 +19,8 @@
 
     <div class="top_wrap">
         <form id="zhao" action="#" method="post">
-            日期:<input id="picktime" name = "start" value="${start}" readonly>
-            <button id="su2" type="button" class="input" onclick="doCommite()">提交</button>
+            <input id="picktime" name = "start" value="${start}" readonly>
+            <input id="su2" onclick="doCommite()" value="提交" readonly/>
         </form>
     </div>
 

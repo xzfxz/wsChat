@@ -1,6 +1,5 @@
 package com.zhao.tool;
 
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.WriteConcern;
@@ -21,7 +20,7 @@ public class MongoManager {
     static {
         mongoClient =  new MongoClient(HOST,PORT);
         MongoClientOptions.Builder options = new MongoClientOptions.Builder();
-        // options.autoConnectRetry(true);// 自动重连true
+//         options.autoConnectRetry(true);// 自动重连true
         // options.maxAutoConnectRetryTime(10); // the maximum auto connect retry time
         options.connectionsPerHost(300);// 连接池设置为300个连接,默认为100
         options.connectTimeout(15000);// 连接超时，推荐>3000毫秒
